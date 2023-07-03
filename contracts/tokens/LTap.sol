@@ -18,8 +18,8 @@ __/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\\\\\\\\\\\____/\\\\\\\\\\\_______/\\\\
 
 */
 
-/// @title LTAP
-/// @notice Locked TAP
+/// @title Locked TAP
+/// @notice Allow users to redeem LTAP for TAP after a certain period of time, in a 1:1 ratio.
 contract LTap is BoringOwnable, ERC20Permit {
     IERC20 tapToken;
     uint256 public lockedUntil;

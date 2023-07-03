@@ -106,6 +106,8 @@ abstract contract FullMath {
     }
 }
 
+/// @title Time Weighted Average Magnitude Lock
+/// @notice More info here  https://docs.tapioca.xyz/tapioca/core-technologies/twaml
 abstract contract TWAML is FullMath {
     /// @notice Compute the minimum weight to participate in the twAML voting mechanism
     /// @param _totalWeight The total weight of the twAML system

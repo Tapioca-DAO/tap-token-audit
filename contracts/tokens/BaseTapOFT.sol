@@ -26,6 +26,9 @@ struct IRewardClaimSendFromParams {
     ITapiocaOFT.LzCallParams callParams;
 }
 
+
+/// @title Base Tap OFT
+/// @notice Inherited by TapOFT. Contains custom LayerZero logic.
 abstract contract BaseTapOFT is OFTV2 {
     using ExcessivelySafeCall for address;
     using BytesLib for bytes;

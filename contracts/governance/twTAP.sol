@@ -8,35 +8,18 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "tapioca-sdk/dist/contracts/util/ERC4494.sol";
 import "../tokens/TapOFT.sol";
 import "../twAML.sol";
-// ********************************************************************************
-// *******************************,                 ,******************************
-// *************************                               ************************
-// *********************                                       ********************
-// *****************,                     @@@                     ,****************
-// ***************                        @@@                        **************
-// *************                    (@@@@@@@@@@@@@(                    ************
-// ***********                   @@@@@@@@#@@@#@@@@@@@@                   **********
-// **********                 .@@@@@      @@@      @@@@@.                 *********
-// *********                 @@@@@        @@@        @@@@@                 ********
-// ********                 @@@@@&        @@@         /@@@@                 *******
-// *******                 &@@@@@@        @@@          #@@@&                 ******
-// ******,                 @@@@@@@@,      @@@           @@@@                 ,*****
-// ******                 #@@@&@@@@@@@@#  @@@           &@@@(                 *****
-// ******                 %@@@%   @@@@@@@@@@@@@@@(      (@@@%                 *****
-// ******                 %@@@%          %@@@@@@@@@@@@. %@@@#                 *****
-// ******.                /@@@@           @@@    *@@@@@@@@@@*                .*****
-// *******                 @@@@           @@@       &@@@@@@@                 ******
-// *******                 /@@@@          @@@        @@@@@@/                .******
-// ********                 %&&&&         @@@        &&&&&#                 *******
-// *********                 *&&&&#       @@@       &&&&&,                 ********
-// **********.                 %&&&&&,    &&&    ,&&&&&%                 .*********
-// ************                   &&&&&&&&&&&&&&&&&&&                   ***********
-// **************                     .#&&&&&&&%.                     *************
-// ****************                       %%%                       ***************
-// *******************                    %%%                    ******************
-// **********************                                    .*********************
-// ***************************                           **************************
-// ************************************..     ..***********************************
+
+/*
+__/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\\\\\\\\\\\____/\\\\\\\\\\\_______/\\\\\_____________/\\\\\\\\\_____/\\\\\\\\\____        
+ _\///////\\\/////____/\\\\\\\\\\\\\__\/\\\/////////\\\_\/////\\\///______/\\\///\\\________/\\\////////____/\\\\\\\\\\\\\__       
+  _______\/\\\________/\\\/////////\\\_\/\\\_______\/\\\_____\/\\\_______/\\\/__\///\\\____/\\\/____________/\\\/////////\\\_      
+   _______\/\\\_______\/\\\_______\/\\\_\/\\\\\\\\\\\\\/______\/\\\______/\\\______\//\\\__/\\\_____________\/\\\_______\/\\\_     
+    _______\/\\\_______\/\\\\\\\\\\\\\\\_\/\\\/////////________\/\\\_____\/\\\_______\/\\\_\/\\\_____________\/\\\\\\\\\\\\\\\_    
+     _______\/\\\_______\/\\\/////////\\\_\/\\\_________________\/\\\_____\//\\\______/\\\__\//\\\____________\/\\\/////////\\\_   
+      _______\/\\\_______\/\\\_______\/\\\_\/\\\_________________\/\\\______\///\\\__/\\\_____\///\\\__________\/\\\_______\/\\\_  
+       _______\/\\\_______\/\\\_______\/\\\_\/\\\______________/\\\\\\\\\\\____\///\\\\\/________\////\\\\\\\\\_\/\\\_______\/\\\_ 
+        _______\///________\///________\///__\///______________\///////////_______\/////_____________\/////////__\///________\///__
+*/
 
 // Justification for data sizes:
 // - 56 bits can represent over 2 billion years in seconds
@@ -76,6 +59,15 @@ struct WeekTotals {
     mapping(uint256 => uint256) totalDistPerVote;
 }
 
+/// @title twTAP
+/// @notice Governance contract for TAP
+/// @dev This contract allow the locking of TAP to twTAP. The amount of twTAP received is based on the amount of locked TAP, and the duration of the lock.
+///      It uses twAML to compute the amount of twTAP received, details about the model can be found here https://docs.tapioca.xyz/tapioca/core-technologies/twaml.
+///      The contract distributes a set of rewards tokens each week to the twTAP holders. The amount of rewards received is based on the amount of twTAP held.
+/// @dev Actions:
+///          - Lock TAP.
+///          - Unlock TAP.
+///          - Claim rewards (Same chain or cross chain).
 contract TwTAP is TWAML, ONFT721, ERC721Permit {
     using SafeERC20 for IERC20;
 
@@ -471,8 +463,8 @@ contract TwTAP is TWAML, ONFT721, ERC721Permit {
     //   INTERNAL
     // ============
 
-    // Mirrors the implementation of _isApprovedOrOwner, with the modification
-    // that it is allowed if `_to` is the owner:
+    /// @dev Mirrors the implementation of _isApprovedOrOwner, with the modification
+    /// that it is allowed if `_to` is the owner:
     function _requireClaimPermission(
         address _to,
         uint256 _tokenId
@@ -487,6 +479,7 @@ contract TwTAP is TWAML, ONFT721, ERC721Permit {
         );
     }
 
+    /// @dev Claim all rewards on a position and send them to `_to`.
     function _claimRewards(uint256 _tokenId, address _to) internal {
         uint256[] memory amounts = claimable(_tokenId);
         uint256 len = amounts.length;
@@ -502,6 +495,7 @@ contract TwTAP is TWAML, ONFT721, ERC721Permit {
         }
     }
 
+    /// @dev Claim rewards of a specific token on a position and send them to `_to`.
     function _claimRewardsOn(
         uint256 _tokenId,
         address _to,
@@ -524,6 +518,7 @@ contract TwTAP is TWAML, ONFT721, ERC721Permit {
         }
     }
 
+    /// @dev Release the tap of a position and send it to `_to`. Remove the user from twAML.
     function _releaseTap(
         uint256 _tokenId,
         address _to
