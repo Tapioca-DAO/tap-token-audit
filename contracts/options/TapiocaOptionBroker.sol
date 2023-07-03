@@ -43,7 +43,7 @@ struct PaymentTokenOracle {
 
 /// @title TapiocaOptionBroker
 /// @notice This contract handles the creation of oTAP, the oTAP options creates an expiry dates to exercise the option, and an eligible amount of TAP that can be exercised.
-///         The amount of TAP that can be exercised is calculated by the TWAML algorithm, which takes into account the size of the participant as well his lock time. 
+///         The amount of TAP that can be exercised is calculated by the TWAML algorithm, which takes into account the size of the participant as well his lock time.
 ///         More info about twAML can be found here https://docs.tapioca.xyz/tapioca/core-technologies/twaml
 ///         More info about the mechanic of how to receive oTAP can be found here https://docs.tapioca.xyz/tapioca/token-economy/dso-dao-share-options
 /// @dev   Actions:

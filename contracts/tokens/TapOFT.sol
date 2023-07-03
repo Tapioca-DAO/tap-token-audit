@@ -21,7 +21,7 @@ __/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\\\\\\\\\\\____/\\\\\\\\\\\_______/\\\\
 /// @title Tapioca OFT token
 /// @notice OFT compatible TAP token
 /// @dev Latest size: 17.663  KiB
-/// @dev Emissions E(x)= E(x-1) - E(x-1) * D with E being total supply a x week, and D the initial decay rate. 
+/// @dev Emissions E(x)= E(x-1) - E(x-1) * D with E being total supply a x week, and D the initial decay rate.
 ///      More info can be found here https://docs.tapioca.xyz/tapioca/token-economy/tap-distribution-and-issuance
 contract TapOFT is BaseTapOFT, ERC20Permit {
     // ==========
